@@ -1,0 +1,21 @@
+PyPDF2
+fastapi
+pytube
+yt-dlp
+scikit-learn
+Pillow
+numpy
+python-dotenv
+yfinance
+pydantic
+# transformers
+python-multipart
+google-generativeai
+instaloader
+requests
+cachetools
+filelock
+redis
+aioredis
+uvicorn
+moviepy==1.0.3
