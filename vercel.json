@@ -1,0 +1,45 @@
+{
+  "builds": [
+    {
+      "src": "backend/main.py",
+      "use": "@vercel/python",
+      "config": { 
+        "maxLambdaSize": "15mb",
+        "runtime": "python3.11",
+        "excludeFiles": [
+          "**/*.pyc",
+          "**/__pycache__/**",
+          ".pytest_cache/**",
+          ".venv/**"
+        ]
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/companies",
+      "dest": "backend/main.py"
+    },
+    {
+      "src": "/analyze_stock",
+      "dest": "backend/main.py"
+    },
+    {
+      "src": "/read",
+      "methods": ["GET", "POST"],
+      "dest": "backend/main.py"
+    },
+    {
+      "src": "/voices",
+      "dest": "backend/main.py"
+    },
+    {
+      "src": "/compress",
+      "dest": "backend/main.py"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "frontend/$1"
+    }
+  ]
+}
