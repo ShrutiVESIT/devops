@@ -4,3 +4,4 @@ backend/__pycache__
 .vscode
 backend/app.log
 frontend/.env
+frontend/.env.example
