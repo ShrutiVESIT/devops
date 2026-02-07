@@ -30,8 +30,8 @@ from pathlib import Path
 from dotenv import load_dotenv
 from collections import namedtuple
 from pydantic import BaseModel
-from boto3 import Session
-from botocore.exceptions import BotoCoreError, ClientError
+# from boto3 import Session
+# from botocore.exceptions import BotoCoreError, ClientError
 from moviepy.editor import AudioFileClip, VideoFileClip
 import numpy as np
 import tempfile
@@ -75,8 +75,8 @@ VIDEO_MIME_TYPES = {"video/mp4", "video/quicktime", "video/webm", "video/x-matro
 AUDIO_MIME_TYPES = {"audio/mpeg", "audio/mp3", "audio/wav", "audio/x-wav", "audio/ogg", "audio/x-m4a", "audio/mp4"}
 
 # AWS Polly client
-session = Session(profile_name="default")
-polly = session.client("polly")
+# session = Session(profile_name="default")
+# polly = session.client("polly")
 
 # ─────────────────────────────────────────────────────────────────────────────
 # FastAPI App Setup
@@ -472,109 +472,109 @@ async def create_whatsapp_sticker(media: UploadFile = File(...)):
 # AWS Polly Text-to-Speech
 # ─────────────────────────────────────────────────────────────────────────────
 
-@app.get("/voices")
-async def get_voices():
-    """Get list of available AWS Polly voices."""
-    params = {}
-    voices = []
+# @app.get("/voices")
+# async def get_voices():
+#     """Get list of available AWS Polly voices."""
+#     params = {}
+#     voices = []
     
-    while True:
-        try:
-            response = polly.describe_voices(**params)
-            voices.extend(response.get("Voices", []))
-            if "NextToken" not in response:
-                break
-            params["NextToken"] = response["NextToken"]
-        except (BotoCoreError, ClientError) as e:
-            raise HTTPException(status_code=500, detail=f"Error fetching voices: {str(e)}")
+#     while True:
+#         try:
+#             response = polly.describe_voices(**params)
+#             voices.extend(response.get("Voices", []))
+#             if "NextToken" not in response:
+#                 break
+#             params["NextToken"] = response["NextToken"]
+#         except (BotoCoreError, ClientError) as e:
+#             raise HTTPException(status_code=500, detail=f"Error fetching voices: {str(e)}")
     
-    return JSONResponse(content=voices)
+#     return JSONResponse(content=voices)
 
 
-class TextToSpeechRequest(BaseModel):
-    text: str
-    voiceId: str = "Brian"
-    outputFormat: str = "mp3"
+# class TextToSpeechRequest(BaseModel):
+#     text: str
+#     voiceId: str = "Brian"
+#     outputFormat: str = "mp3"
 
 
-@app.post("/read")
-async def read_text_post(request: TextToSpeechRequest):
-    """Convert text to speech using AWS Polly (POST)."""
-    if request.outputFormat not in AUDIO_FORMATS:
-        raise HTTPException(status_code=400, detail="Invalid output format")
+# @app.post("/read")
+# async def read_text_post(request: TextToSpeechRequest):
+#     """Convert text to speech using AWS Polly (POST)."""
+#     if request.outputFormat not in AUDIO_FORMATS:
+#         raise HTTPException(status_code=400, detail="Invalid output format")
     
-    try:
-        ssml_text = f"<speak><prosody rate='115%'>{request.text}</prosody></speak>"
-        response = polly.synthesize_speech(
-            Text=ssml_text,
-            TextType="ssml",
-            VoiceId=request.voiceId,
-            OutputFormat=request.outputFormat,
-            Engine="neural"
-        )
-        audio_stream = response.get("AudioStream")
+#     try:
+#         ssml_text = f"<speak><prosody rate='115%'>{request.text}</prosody></speak>"
+#         response = polly.synthesize_speech(
+#             Text=ssml_text,
+#             TextType="ssml",
+#             VoiceId=request.voiceId,
+#             OutputFormat=request.outputFormat,
+#             Engine="neural"
+#         )
+#         audio_stream = response.get("AudioStream")
         
-        if not audio_stream:
-            raise HTTPException(status_code=500, detail="Error generating speech - no AudioStream returned")
+#         if not audio_stream:
+#             raise HTTPException(status_code=500, detail="Error generating speech - no AudioStream returned")
         
-        def iterfile():
-            with closing(audio_stream) as stream:
-                while True:
-                    data = stream.read(CHUNK_SIZE)
-                    if not data:
-                        break
-                    yield data
+#         def iterfile():
+#             with closing(audio_stream) as stream:
+#                 while True:
+#                     data = stream.read(CHUNK_SIZE)
+#                     if not data:
+#                         break
+#                     yield data
         
-        return StreamingResponse(
-            iterfile(),
-            media_type=AUDIO_FORMATS[request.outputFormat],
-            headers={"Content-Disposition": f"attachment; filename=speech.{request.outputFormat}"}
-        )
-    except (BotoCoreError, ClientError) as e:
-        raise HTTPException(status_code=500, detail=f"Error synthesizing speech: {str(e)}")
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Unexpected error: {str(e)}")
+#         return StreamingResponse(
+#             iterfile(),
+#             media_type=AUDIO_FORMATS[request.outputFormat],
+#             headers={"Content-Disposition": f"attachment; filename=speech.{request.outputFormat}"}
+#         )
+#     except (BotoCoreError, ClientError) as e:
+#         raise HTTPException(status_code=500, detail=f"Error synthesizing speech: {str(e)}")
+#     except Exception as e:
+#         raise HTTPException(status_code=500, detail=f"Unexpected error: {str(e)}")
 
 
-@app.get("/read")
-async def read_text_get(
-    text: str = Query(..., description="Text to convert to speech"),
-    voiceId: str = Query("Brian", description="Voice ID from /voices endpoint"),
-    outputFormat: str = Query("mp3", enum=list(AUDIO_FORMATS.keys()))
-):
-    """Convert text to speech using AWS Polly (GET)."""
-    try:
-        if outputFormat not in AUDIO_FORMATS:
-            raise HTTPException(status_code=400, detail="Invalid output format")
+# @app.get("/read")
+# async def read_text_get(
+#     text: str = Query(..., description="Text to convert to speech"),
+#     voiceId: str = Query("Brian", description="Voice ID from /voices endpoint"),
+#     outputFormat: str = Query("mp3", enum=list(AUDIO_FORMATS.keys()))
+# ):
+#     """Convert text to speech using AWS Polly (GET)."""
+#     try:
+#         if outputFormat not in AUDIO_FORMATS:
+#             raise HTTPException(status_code=400, detail="Invalid output format")
         
-        ssml_text = f"<speak><prosody rate='115%'>{text}</prosody></speak>"
-        response = polly.synthesize_speech(
-            Text=ssml_text,
-            TextType="ssml",
-            VoiceId=voiceId,
-            OutputFormat=outputFormat,
-            Engine="neural"
-        )
-        audio_stream = response.get("AudioStream")
+#         ssml_text = f"<speak><prosody rate='115%'>{text}</prosody></speak>"
+#         response = polly.synthesize_speech(
+#             Text=ssml_text,
+#             TextType="ssml",
+#             VoiceId=voiceId,
+#             OutputFormat=outputFormat,
+#             Engine="neural"
+#         )
+#         audio_stream = response.get("AudioStream")
         
-        if not audio_stream:
-            raise HTTPException(status_code=500, detail="Error generating speech")
+#         if not audio_stream:
+#             raise HTTPException(status_code=500, detail="Error generating speech")
         
-        def iterfile():
-            with closing(audio_stream) as stream:
-                while True:
-                    data = stream.read(CHUNK_SIZE)
-                    if not data:
-                        break
-                    yield data
+#         def iterfile():
+#             with closing(audio_stream) as stream:
+#                 while True:
+#                     data = stream.read(CHUNK_SIZE)
+#                     if not data:
+#                         break
+#                     yield data
         
-        return StreamingResponse(
-            iterfile(),
-            media_type=AUDIO_FORMATS[outputFormat],
-            headers={"Content-Disposition": f"attachment; filename=speech.{outputFormat}"}
-        )
-    except (BotoCoreError, ClientError) as e:
-        raise HTTPException(status_code=500, detail=f"Error synthesizing speech: {str(e)}")
+#         return StreamingResponse(
+#             iterfile(),
+#             media_type=AUDIO_FORMATS[outputFormat],
+#             headers={"Content-Disposition": f"attachment; filename=speech.{outputFormat}"}
+#         )
+#     except (BotoCoreError, ClientError) as e:
+#         raise HTTPException(status_code=500, detail=f"Error synthesizing speech: {str(e)}")
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Entry Point
