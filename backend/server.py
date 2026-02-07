@@ -30,8 +30,8 @@ from pathlib import Path
 from dotenv import load_dotenv
 from collections import namedtuple
 from pydantic import BaseModel
-# from boto3 import Session
-# from botocore.exceptions import BotoCoreError, ClientError
+# from boto3 import Session # aws functionalities removed 
+# from botocore.exceptions import BotoCoreError, ClientError  # aws functionalities removed 
 from moviepy.editor import AudioFileClip, VideoFileClip
 import numpy as np
 import tempfile
