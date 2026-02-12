@@ -3,6 +3,7 @@
 import ImgToPdf from '../components/cards/ImgToPdf'
 import PDFEditor from '../components/cards/PDFEditor'
 import PdfMerger from '../components/cards/PdfMerger'
+import PdfPasswordCard from '../components/cards/PdfPasswordCard'
 
 const PDFHub = () => {
   return (
@@ -13,6 +14,7 @@ const PDFHub = () => {
         <ImgToPdf/>
         <PDFEditor/>
         <PdfMerger/>
+        <PdfPasswordCard/>
       </div>
     </div>
   )

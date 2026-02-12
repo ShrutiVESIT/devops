@@ -268,6 +268,83 @@ async def edit_pdf(
     except Exception as e:
         raise HTTPException(500, f"Processing error: {str(e)}")
 
+@app.post("/pdf-password/")
+async def pdf_password(
+    file: UploadFile = File(...),
+    action: str = Form(..., description="Action: 'add' or 'remove'"),
+    password: str = Form(..., description="Password to add or existing password to remove"),
+    new_password: str = Form(None, description="New password (only for 'add' action)")
+):
+    """
+    Add or remove password protection from a PDF file.
+    - action='add': Encrypts PDF with the provided password
+    - action='remove': Decrypts PDF using the provided password
+    """
+    try:
+
+        if file.content_type != "application/pdf":
+            raise HTTPException(400, "Only PDF files allowed")
+
+        if action not in ["add", "remove"]:
+            raise HTTPException(400, "Action must be 'add' or 'remove'")
+        
+        contents = await file.read()
+        reader = PdfReader(io.BytesIO(contents))
+        writer = PdfWriter()
+        
+        if action == "remove":
+            # Check if PDF is encrypted
+            if reader.is_encrypted:
+                try:
+                    # Try to decrypt with provided password
+                    if not reader.decrypt(password):
+                        raise HTTPException(400, "Incorrect password")
+                except Exception as decrypt_error:
+                    raise HTTPException(400, f"Failed to decrypt PDF: {str(decrypt_error)}")
+            else:
+                raise HTTPException(400, "PDF is not password protected")
+            
+            # Copy all pages to writer (unencrypted)
+            for page in reader.pages:
+                writer.add_page(page)
+                
+        elif action == "add":
+            # If PDF is encrypted, decrypt it first
+            if reader.is_encrypted:
+                try:
+                    if not reader.decrypt(password if new_password else ""):
+                        raise HTTPException(400, "PDF is already encrypted. Provide current password.")
+                except:
+                    raise HTTPException(400, "PDF is already encrypted and could not be decrypted")
+            
+            # Copy all pages
+            for page in reader.pages:
+                writer.add_page(page)
+            
+            # Encrypt with the provided password
+            encrypt_password = new_password if new_password else password
+            writer.encrypt(encrypt_password)
+        
+        # Write to buffer
+        buffer = io.BytesIO()
+        writer.write(buffer)
+        buffer.seek(0)
+        
+        action_prefix = "protected" if action == "add" else "unprotected"
+        filename = f"{action_prefix}_{file.filename}"
+        
+        return StreamingResponse(
+            iter(lambda: buffer.read(4096), b''),
+            media_type="application/pdf",
+            headers={"Content-Disposition": f'attachment; filename="{filename}"'}
+        )
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(500, f"Processing error: {str(e)}")
+
+
 # ─────────────────────────────────────────────────────────────────────────────
 # WhatsApp Sticker Generation
 # ─────────────────────────────────────────────────────────────────────────────
@@ -409,7 +486,6 @@ def _generate_audio_preview(temp_path: str) -> bytes:
             trimmed_clip.close()
         if output_file and os.path.exists(output_file.name):
             os.remove(output_file.name)
-
 
 @app.post("/stickers/whatsapp")
 async def create_whatsapp_sticker(media: UploadFile = File(...)):

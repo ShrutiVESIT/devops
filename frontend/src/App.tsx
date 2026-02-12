@@ -11,8 +11,9 @@ import Trader from './pages/Trader'
 import Home from './pages/Home'
 import Download from './pages/Download'
 import ImgHub from './pages/ImgHub'
-function App() {
 
+
+function App() {
   return (
     <div>
       <BrowserRouter>
