@@ -38,6 +38,7 @@ const PdfPasswordCard: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('handleSubmit called', { file: file?.name, action, password: password ? '***' : 'empty' });
 
     if (!file) {
       toast.error('Please select a PDF file');
@@ -61,8 +62,12 @@ const PdfPasswordCard: React.FC = () => {
     formData.append('action', action);
     formData.append('password', password);
 
+    const apiUrl = buildApiUrl('/pdf-password/');
+    console.log('Sending request to:', apiUrl);
+    console.log('FormData:', { file: file.name, action, password: '***' });
+
     try {
-      const res = await axios.post<Blob>(buildApiUrl('/pdf-password/'), formData, {
+      const res = await axios.post<Blob>(apiUrl, formData, {
         responseType: 'blob',
         headers: { 'Content-Type': 'multipart/form-data' },
       });
@@ -80,19 +85,30 @@ const PdfPasswordCard: React.FC = () => {
       setPassword('');
       setConfirmPassword('');
     } catch (error: unknown) {
-      if (axios.isAxiosError(error) && error.response) {
-        const blob = error.response.data;
-        const text = await blob.text();
-        try {
-          const json = JSON.parse(text);
-          toast.error(json.detail || 'Operation failed');
-        } catch {
+      console.error('Request failed:', error);
+      if (axios.isAxiosError(error)) {
+        console.error('Axios error details:', {
+          message: error.message,
+          code: error.code,
+          status: error.response?.status,
+        });
+        if (error.response) {
+          const blob = error.response.data;
+          const text = await blob.text();
+          try {
+            const json = JSON.parse(text);
+            toast.error(json.detail || 'Operation failed');
+          } catch {
+            toast.error('Operation failed');
+          }
+        } else if (error.code === 'ERR_NETWORK') {
+          toast.error('Cannot connect to server. Is the backend running?');
+        } else {
           toast.error('Operation failed');
         }
       } else {
         toast.error('Operation failed');
       }
-      console.error(error);
     } finally {
       setLoading(false);
     }
