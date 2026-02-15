@@ -109,7 +109,32 @@ async def compress_image_api(n_colors: str = Form(...), file: UploadFile = File(
 # ─────────────────────────────────────────────────────────────────────────────
 # ICO Conversion
 # ─────────────────────────────────────────────────────────────────────────────
-# HERE!!!!!
+
+@app.post("/convert-ico/")
+async def convert_to_ico(file: UploadFile = File(...)):
+    """Convert PNG/JPG to ICO format."""
+    allowed_types = ['image/jpeg', 'image/png', 'image/jpg']
+    content_type = (file.content_type or "").lower()
+    filename = file.filename or ""
+    valid_extension = filename.lower().endswith(('.png', '.jpg', '.jpeg'))
+   
+    if content_type not in allowed_types and not valid_extension:
+        raise HTTPException(status_code=400, detail=f"Only PNG/JPG files are allowed. Received: {content_type}")
+   
+    try:
+        image = Image.open(io.BytesIO(await file.read()))
+        ico_buffer = io.BytesIO()
+        image.save(ico_buffer, format="ICO")
+        ico_buffer.seek(0)
+       
+        return StreamingResponse(
+            ico_buffer,
+            media_type="image/x-icon",
+            headers={"Content-Disposition": "attachment; filename=converted.ico"}
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to convert image: {str(e)}")
+
 # ─────────────────────────────────────────────────────────────────────────────
 # PDF Operations
 # ─────────────────────────────────────────────────────────────────────────────

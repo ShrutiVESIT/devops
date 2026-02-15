@@ -5,4 +5,3 @@ backend/__pycache__
 backend/app.log
 frontend/.env
 frontend/.env.example
-frontend/src/components/cards/ConvertCardIco.tsx
