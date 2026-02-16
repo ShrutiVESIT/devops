@@ -24,14 +24,9 @@ pipeline {
         stage('Backend: install + smoke test') {
             steps {
                 dir('backend') {
-                    bat '''
-                        "C:\\Program Files\\Python314\\python.exe" --version && ^
-                        "C:\\Program Files\\Python314\\python.exe" -m venv venv && ^
-                        call venv\\Scripts\\activate.bat && ^
-                        pip install -U pip && ^
-                        pip install -r requirements.txt && ^
-                        python -c "import fastapi; import uvicorn; print('Backend deps OK')"
-                    '''
+                    bat '"C:\\Program Files\\Python314\\python.exe" --version'
+                    bat '"C:\\Program Files\\Python314\\python.exe" -m venv venv'
+                    bat 'call venv\\Scripts\\activate.bat && pip install -U pip && pip install -r requirements.txt && python -c "import fastapi; import uvicorn; print(\'Backend deps OK\')"'
                 }
             }
         }
