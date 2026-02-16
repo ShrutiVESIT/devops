@@ -25,8 +25,8 @@ pipeline {
             steps {
                 dir('backend') {
                     bat '''
-                        python --version && ^
-                        python -m venv venv && ^
+                        "C:\\Program Files\\Python314\\python.exe" --version && ^
+                        "C:\\Program Files\\Python314\\python.exe" -m venv venv && ^
                         call venv\\Scripts\\activate.bat && ^
                         pip install -U pip && ^
                         pip install -r requirements.txt && ^
