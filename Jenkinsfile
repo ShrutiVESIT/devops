@@ -16,7 +16,7 @@ pipeline {
             steps {
                 dir('frontend') {
                     bat 'npm ci'
-                    bat 'npm run build'
+                    bat 'npx vite build'
                 }
             }
         }
