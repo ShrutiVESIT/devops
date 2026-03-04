@@ -28,10 +28,11 @@ node {
     }
 
     stage('UI Tests: Selenium + TestNG') {
-        dir('ui-tests') {
-            bat 'mvn clean test'
-        }
+    dir('ui-tests') {
+        bat 'dir'
+        bat '"C:\\Program Files\\Apache\\apache-maven-3.9.12\\bin\\mvn.cmd" clean test'
     }
+}
 
     stage('Publish Test Results') {
         junit '**/ui-tests/target/surefire-reports/*.xml'
