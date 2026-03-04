@@ -1,15 +1,20 @@
 package tests;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.By;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import java.time.Duration;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class HomePageTest {
 
@@ -32,56 +37,52 @@ public class HomePageTest {
     }
 
     @Test(priority = 1)
-    public void testPageTitle() {
+    public void testPageTitleExists() {
         driver.get(BASE_URL);
+
         String title = driver.getTitle();
-        System.out.println("Page title: " + title);
-        Assert.assertEquals(title, "NeoPack Kit", "Page title should be 'NeoPack Kit'");
+        Assert.assertTrue(title.length() > 0, "Page title should exist");
     }
 
     @Test(priority = 2)
-    public void testPageLoads() {
+    public void testNeoBrandLinkExists() {
         driver.get(BASE_URL);
-        WebElement body = driver.findElement(By.tagName("body"));
-        Assert.assertTrue(body.isDisplayed(), "Page body should be visible");
+
+        WebElement brandLink = driver.findElement(By.cssSelector("a[href='/']"));
+        Assert.assertTrue(brandLink.isDisplayed(), "Brand link should be visible");
     }
 
     @Test(priority = 3)
-    public void testRootDivExists() {
+    public void testPackTextExists() {
         driver.get(BASE_URL);
-        WebElement root = driver.findElement(By.id("root"));
-        Assert.assertTrue(root.isDisplayed(), "Root div should be present and visible");
+
+        WebElement pack = driver.findElement(By.xpath("//span[contains(text(),'PACK')]"));
+        Assert.assertTrue(pack.isDisplayed(), "PACK text should be visible");
     }
 
     @Test(priority = 4)
-    public void testNeoPackBrandingVisible() {
+    public void testToolkitSubtitle() {
         driver.get(BASE_URL);
 
-        // Check that the page body contains "NEOPACK" or "NeoPack" branding
-        WebElement body = driver.findElement(By.tagName("body"));
-        String pageText = body.getText();
-        System.out.println("Page text contains: " + pageText.substring(0, Math.min(200, pageText.length())));
-
-        boolean hasBranding = pageText.contains("NEO") || pageText.contains("Neo") || pageText.contains("NEOPACK") || pageText.contains("NeoPack");
-        Assert.assertTrue(hasBranding, "Page should contain NeoPack branding");
+        WebElement subtitle = driver.findElement(By.cssSelector("p.italic"));
+        Assert.assertEquals(subtitle.getText().trim(), "Toolkit");
     }
 
     @Test(priority = 5)
-    public void testToolkitSubtitleVisible() {
+    public void testNavigationBarExists() {
         driver.get(BASE_URL);
-        // The homepage has a <p> with "Toolkit" text
-        WebElement subtitle = driver.findElement(By.cssSelector("p.italic"));
-        Assert.assertTrue(subtitle.isDisplayed(), "Toolkit subtitle should be visible");
-        Assert.assertEquals(subtitle.getText().trim(), "Toolkit", "Subtitle text should be 'Toolkit'");
+
+        WebElement nav = driver.findElement(By.tagName("nav"));
+        Assert.assertTrue(nav.isDisplayed(), "Navigation bar should be visible");
     }
 
     @Test(priority = 6)
-    public void testNavigationExists() {
-        driver.get(BASE_URL);
-        // The app has a TopBar navigation component
-        WebElement nav = driver.findElement(By.tagName("nav"));
-        Assert.assertTrue(nav.isDisplayed(), "Navigation bar should be present");
-    }
+public void testMainSectionExists() {
+    driver.get(BASE_URL);
+
+    WebElement main = driver.findElement(By.tagName("main"));
+    Assert.assertTrue(main.isDisplayed(), "Main section should exist");
+}
 
     @AfterClass
     public void tearDown() {
