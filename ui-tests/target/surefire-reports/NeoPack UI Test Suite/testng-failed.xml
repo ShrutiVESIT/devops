@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [NeoPack UI Test Suite]" guice-stage="DEVELOPMENT" verbose="0">
+  <test thread-count="5" name="Homepage Tests(failed)" verbose="0">
+    <classes>
+      <class name="tests.HomePageTest">
+        <methods>
+          <include name="setUp"/>
+          <include name="tearDown"/>
+          <include name="testMenuButtonExists"/>
+        </methods>
+      </class> <!-- tests.HomePageTest -->
+    </classes>
+  </test> <!-- Homepage Tests(failed) -->
+</suite> <!-- Failed suite [NeoPack UI Test Suite] -->

@@ -1,0 +1,5 @@
+# Created at 2026-03-01T23:18:40.880
+Boot Manifest-JAR contains absolute paths in classpath 'D:\Computer Science\projects\GHub_Contributions\devops_mca_toolkit\devops\ui-tests\target\test-classes'
+Hint: <argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
+'other' has different root
+
