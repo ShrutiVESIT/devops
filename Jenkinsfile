@@ -35,8 +35,8 @@ node {
 }
 
     stage('Publish Test Results') {
-        junit '**/ui-tests/target/surefire-reports/*.xml'
-    }
+    junit 'ui-tests/target/surefire-reports/*.xml'
+}
 
     stage('Cleanup') {
         // Kill the Vite dev server
