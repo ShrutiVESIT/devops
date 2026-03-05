@@ -25,8 +25,7 @@ node {
             // Wait a few seconds for the server to start
             bat 'ping -n 10 127.0.0.1 > nul'
         }
-<<<<<<< HEAD
-=======
+
     }
 
     stage('UI Tests: Selenium + TestNG') {
@@ -43,7 +42,7 @@ node {
         // Kill the Vite dev server
         bat 'taskkill /F /IM node.exe /T || exit /b 0'
         echo 'Pipeline complete: build, deploy, and UI tests finished'
->>>>>>> 55026b5d0cb197edb6cc366135381b1913eea1e0
+
     }
 
 
