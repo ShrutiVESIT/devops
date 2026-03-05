@@ -16,6 +16,10 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
+import java.time.Duration;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+
 public class HomePageTest {
 
     private WebDriver driver;
@@ -72,17 +76,21 @@ public class HomePageTest {
     public void testNavigationBarExists() {
         driver.get(BASE_URL);
 
-        WebElement nav = driver.findElement(By.tagName("nav"));
-        Assert.assertTrue(nav.isDisplayed(), "Navigation bar should be visible");
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        WebElement nav = wait.until(
+                ExpectedConditions.presenceOfElementLocated(By.tagName("nav")));
+
+        Assert.assertTrue(nav.isDisplayed());
     }
 
     @Test(priority = 6)
-public void testMainSectionExists() {
-    driver.get(BASE_URL);
+    public void testMainSectionExists() {
+        driver.get(BASE_URL);
 
-    WebElement main = driver.findElement(By.tagName("main"));
-    Assert.assertTrue(main.isDisplayed(), "Main section should exist");
-}
+        WebElement main = driver.findElement(By.tagName("main"));
+        Assert.assertTrue(main.isDisplayed(), "Main section should exist");
+    }
 
     @AfterClass
     public void tearDown() {
