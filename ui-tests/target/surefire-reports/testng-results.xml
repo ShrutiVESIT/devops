@@ -2,40 +2,40 @@
 <testng-results ignored="0" total="6" passed="6" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2026-03-01T23:20:14 IST" name="NeoPack UI Test Suite" finished-at="2026-03-01T23:20:16 IST" duration-ms="2394">
+  <suite started-at="2026-03-01T23:53:53 IST" name="NeoPack UI Test Suite" finished-at="2026-03-01T23:53:57 IST" duration-ms="3576">
     <groups>
     </groups>
-    <test started-at="2026-03-01T23:20:14 IST" name="Homepage Tests" finished-at="2026-03-01T23:20:16 IST" duration-ms="2394">
+    <test started-at="2026-03-01T23:53:53 IST" name="Homepage Tests" finished-at="2026-03-01T23:53:57 IST" duration-ms="3576">
       <class name="tests.HomePageTest">
-        <test-method is-config="true" signature="setUp()[pri:0, instance:tests.HomePageTest@7c729a55]" started-at="2026-03-01T23:20:14 IST" name="setUp" finished-at="2026-03-01T23:20:15 IST" duration-ms="1327" status="PASS">
+        <test-method is-config="true" signature="setUp()[pri:0, instance:tests.HomePageTest@7c729a55]" started-at="2026-03-01T23:53:53 IST" name="setUp" finished-at="2026-03-01T23:53:55 IST" duration-ms="1354" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUp -->
-        <test-method signature="testPageTitle()[pri:1, instance:tests.HomePageTest@7c729a55]" started-at="2026-03-01T23:20:15 IST" name="testPageTitle" finished-at="2026-03-01T23:20:16 IST" duration-ms="330" status="PASS">
+        <test-method signature="testPageTitle()[pri:1, instance:tests.HomePageTest@7c729a55]" started-at="2026-03-01T23:53:55 IST" name="testPageTitle" finished-at="2026-03-01T23:53:56 IST" duration-ms="1502" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testPageTitle -->
-        <test-method signature="testPageLoads()[pri:2, instance:tests.HomePageTest@7c729a55]" started-at="2026-03-01T23:20:16 IST" name="testPageLoads" finished-at="2026-03-01T23:20:16 IST" duration-ms="187" status="PASS">
+        <test-method signature="testPageLoads()[pri:2, instance:tests.HomePageTest@7c729a55]" started-at="2026-03-01T23:53:56 IST" name="testPageLoads" finished-at="2026-03-01T23:53:56 IST" duration-ms="142" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testPageLoads -->
-        <test-method signature="testRootDivExists()[pri:3, instance:tests.HomePageTest@7c729a55]" started-at="2026-03-01T23:20:16 IST" name="testRootDivExists" finished-at="2026-03-01T23:20:16 IST" duration-ms="93" status="PASS">
+        <test-method signature="testRootDivExists()[pri:3, instance:tests.HomePageTest@7c729a55]" started-at="2026-03-01T23:53:56 IST" name="testRootDivExists" finished-at="2026-03-01T23:53:56 IST" duration-ms="102" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testRootDivExists -->
-        <test-method signature="testNeoPackBrandingVisible()[pri:4, instance:tests.HomePageTest@7c729a55]" started-at="2026-03-01T23:20:16 IST" name="testNeoPackBrandingVisible" finished-at="2026-03-01T23:20:16 IST" duration-ms="97" status="PASS">
+        <test-method signature="testNeoPackBrandingVisible()[pri:4, instance:tests.HomePageTest@7c729a55]" started-at="2026-03-01T23:53:56 IST" name="testNeoPackBrandingVisible" finished-at="2026-03-01T23:53:57 IST" duration-ms="96" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testNeoPackBrandingVisible -->
-        <test-method signature="testToolkitSubtitleVisible()[pri:5, instance:tests.HomePageTest@7c729a55]" started-at="2026-03-01T23:20:16 IST" name="testToolkitSubtitleVisible" finished-at="2026-03-01T23:20:16 IST" duration-ms="100" status="PASS">
+        <test-method signature="testToolkitSubtitleVisible()[pri:5, instance:tests.HomePageTest@7c729a55]" started-at="2026-03-01T23:53:57 IST" name="testToolkitSubtitleVisible" finished-at="2026-03-01T23:53:57 IST" duration-ms="105" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testToolkitSubtitleVisible -->
-        <test-method signature="testNavigationExists()[pri:6, instance:tests.HomePageTest@7c729a55]" started-at="2026-03-01T23:20:16 IST" name="testNavigationExists" finished-at="2026-03-01T23:20:16 IST" duration-ms="83" status="PASS">
+        <test-method signature="testNavigationExists()[pri:6, instance:tests.HomePageTest@7c729a55]" started-at="2026-03-01T23:53:57 IST" name="testNavigationExists" finished-at="2026-03-01T23:53:57 IST" duration-ms="91" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testNavigationExists -->
-        <test-method is-config="true" signature="tearDown()[pri:0, instance:tests.HomePageTest@7c729a55]" started-at="2026-03-01T23:20:16 IST" name="tearDown" finished-at="2026-03-01T23:20:16 IST" duration-ms="143" status="PASS">
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:tests.HomePageTest@7c729a55]" started-at="2026-03-01T23:53:57 IST" name="tearDown" finished-at="2026-03-01T23:53:57 IST" duration-ms="143" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDown -->

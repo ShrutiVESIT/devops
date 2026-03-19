@@ -1,18 +1,14 @@
-
-
 import ImgToPdf from '../components/cards/ImgToPdf'
-import PDFEditor from '../components/cards/PDFEditor'
+import PdfEditor from '../components/cards/PdfEditor'
 import PdfMerger from '../components/cards/PdfMerger'
 import PdfPasswordCard from '../components/cards/PdfPasswordCard'
 
-const PDFHub = () => {
+const PdfHub = () => {
   return (
     <div>
-        
       <div className='poppins-regular'>
-
         <ImgToPdf/>
-        <PDFEditor/>
+        <PdfEditor/>
         <PdfMerger/>
         <PdfPasswordCard/>
       </div>
@@ -20,4 +16,4 @@ const PDFHub = () => {
   )
 }
 
-export default PDFHub
+export default PdfHub
