@@ -1,6 +1,6 @@
 node {
     stage('Checkout') {
-        checkout scm
+        git url: 'https://github.com/ShrutiVESIT/devops', branch: 'master'
     }
 
     stage('Frontend: install + build') {
@@ -30,7 +30,7 @@ node {
     stage('UI Tests: Selenium + TestNG') {
     dir('ui-tests') {
         bat 'dir'
-        bat '"C:\\Program Files\\Apache\\apache-maven-3.9.12\\bin\\mvn.cmd" clean test'
+        bat 'mvn clean test'
     }
 }
 
