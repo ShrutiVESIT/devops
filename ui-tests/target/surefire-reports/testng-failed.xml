@@ -11,8 +11,7 @@
           <include name="testPageTitle"/>
           <include name="testToolkitSubtitleVisible"/>
           <include name="tearDown"/>
-          <include name="testNeoPackBrandingVisible"/>
-          <include name="testRootDivExists"/>
+          <include name="testMenuButtonExists"/>
         </methods>
       </class> <!-- tests.HomePageTest -->
     </classes>
