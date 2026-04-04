@@ -5,7 +5,11 @@
     <classes>
       <class name="tests.HomePageTest">
         <methods>
+          <include name="testPageLoads"/>
           <include name="setUp"/>
+          <include name="testNavigationExists"/>
+          <include name="testPageTitle"/>
+          <include name="testToolkitSubtitleVisible"/>
           <include name="tearDown"/>
           <include name="testMenuButtonExists"/>
         </methods>
