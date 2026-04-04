@@ -12,10 +12,13 @@ node {
 
     stage('Backend: install + smoke test') {
         dir('backend') {
-            bat '"C:\\Python314\\python.exe" --version'
-            bat '"C:\\Python314\\python.exe" -m venv venv'
-            bat 'call venv\\Scripts\\activate.bat && venv\\Scripts\\python.exe -m pip install -U pip && pip install -r requirements.txt && python -c "import fastapi; import uvicorn; print(\'Backend deps OK\')"'
-        }
+            bat '''
+            python -m venv venv
+            venv\\Scripts\\python -m pip install -U pip
+            venv\\Scripts\\pip install -r requirements.txt
+            venv\\Scripts\\python -c "import fastapi; import uvicorn; print('Backend deps OK')"
+            '''
+            }
     }
 
     stage('Deploy: start frontend dev server') {
