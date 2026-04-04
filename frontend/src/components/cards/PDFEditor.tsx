@@ -6,7 +6,7 @@ import { FileDropZone } from '../shared/FileDropZone';
 import { CardHeader, SubmitButton } from '../shared/CardComponents';
 import { useDragDrop, downloadBlob } from '../shared/useFileHandling';
 
-const PDFEditor: React.FC = () => {
+const PdfEditor: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
   const [pagesToRemove, setPagesToRemove] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
@@ -130,4 +130,4 @@ const PDFEditor: React.FC = () => {
   );
 };
 
-export default PDFEditor;
+export default PdfEditor;

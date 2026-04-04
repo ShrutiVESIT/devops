@@ -1,40 +1,46 @@
-pipeline {
-    agent any
-
-    tools {
-        nodejs 'NodeJS-LTS'
+node {
+    stage('Checkout') {
+        checkout scm
     }
 
-    stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
+    stage('Frontend: install + build') {
+        dir('frontend') {
+            bat 'npm ci'
+            bat 'npx vite build'
         }
+    }
 
-        stage('Frontend: install + build') {
-            steps {
-                dir('frontend') {
-                    bat 'npm ci'
-                    bat 'npx vite build'
-                }
-            }
+    stage('Backend: install + smoke test') {
+        dir('backend') {
+            bat '"C:\\Python314\\python.exe" --version'
+            bat '"C:\\Python314\\python.exe" -m venv venv'
+            bat 'call venv\\Scripts\\activate.bat && venv\\Scripts\\python.exe -m pip install -U pip && pip install -r requirements.txt && python -c "import fastapi; import uvicorn; print(\'Backend deps OK\')"'
         }
+    }
 
-        stage('Backend: install + smoke test') {
-            steps {
-                dir('backend') {
-                    bat '"C:\\Program Files\\Python314\\python.exe" --version'
-                    bat '"C:\\Program Files\\Python314\\python.exe" -m venv venv'
-                    bat 'call venv\\Scripts\\activate.bat && pip install -U pip && pip install -r requirements.txt && python -c "import fastapi; import uvicorn; print(\'Backend deps OK\')"'
-                }
-            }
+    stage('Deploy: start frontend dev server') {
+        dir('frontend') {
+            // Start Vite dev server in background so Selenium can access it
+            bat 'start /B cmd /c "npx vite --host 0.0.0.0 > vite.log 2>&1"'
+            // Wait a few seconds for the server to start
+            bat 'ping -n 10 127.0.0.1 > nul'
         }
+    }
 
-        stage('Deploy (demo)') {
-            steps {
-                echo 'Deploy step: build artifacts ready'
-            }
-        }
+    stage('UI Tests: Selenium + TestNG') {
+    dir('ui-tests') {
+        bat 'dir'
+        bat '"C:\\Program Files\\Apache\\apache-maven-3.9.12\\bin\\mvn.cmd" clean test'
+    }
+}
+
+    stage('Publish Test Results') {
+        junit '**/ui-tests/target/surefire-reports/*.xml'
+    }
+
+    stage('Cleanup') {
+        // Kill the Vite dev server
+        bat 'taskkill /F /IM node.exe /T || exit /b 0'
+        echo 'Pipeline complete: build, deploy, and UI tests finished'
     }
 }

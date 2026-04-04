@@ -6,7 +6,7 @@ import TopBar from './components/shared/TopBar'
 import Synth from './pages/Synth'
 import { LeftBar } from './components/shared/LeftBar'
 import Snake from './pages/Snake'
-import PDFHub from './pages/PdfHub'
+import PdfHub from './pages/PdfHub'
 import Trader from './pages/Trader'
 import Home from './pages/Home'
 import Download from './pages/Download'
@@ -26,7 +26,7 @@ function App() {
         {/* <Route path={"/download"} element={<Download/>}></Route> */}
         <Route path={"/image"} element={<ImgHub/>}></Route>
         {/* <Route path={"/synth"} element={<Synth/>}></Route> */}
-        <Route path={"/pdf"} element={<PDFHub/>}></Route>
+        <Route path={"/pdf"} element={<PdfHub/>}></Route>
         <Route path={"/snake"} element={<Snake/>}></Route>
         <Route path={"/trader"} element={<Trader/>}></Route>
         <Route path='*' element={<Snake />} />
