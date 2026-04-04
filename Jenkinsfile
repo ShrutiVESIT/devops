@@ -1,4 +1,4 @@
-node {
+node('win-agent') {
     stage('Checkout') {
         git url: 'https://github.com/ShrutiVESIT/devops', branch: 'master'
     }
