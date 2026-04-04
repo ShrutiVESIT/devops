@@ -14,13 +14,12 @@ node('win-agent') {
         dir('backend') {
             bat '''
             python -m venv venv
-            venv\\Scripts\\python -m pip install -U pip
+            venv\\Scripts\\python -m pip install --upgrade pip
             venv\\Scripts\\pip install -r requirements.txt
             venv\\Scripts\\python -c "import fastapi; import uvicorn; print('Backend deps OK')"
             '''
-            }
+        }
     }
-
     stage('Deploy: start frontend dev server') {
         dir('frontend') {
             // Start Vite dev server in background so Selenium can access it
