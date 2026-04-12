@@ -17,7 +17,7 @@ const Home = () => {
             
           </a>
           <p className="italic font-light underline underline-offset-4 decoration-green-400 group-hover:decoration-white">
-              Toolkit
+              Toolkit [CHANGE HERE!!!!!]
             </p>
         </div>
         <InfoCard />
