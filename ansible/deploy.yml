@@ -1,0 +1,14 @@
+---
+- name: Deploy DevOps Toolkit Application
+  hosts: webservers
+  become: no
+  tasks:
+    - name: Run Docker Compose Build (Local)
+      command: "docker-compose build"
+      args:
+        chdir: "../"
+
+    - name: Run Docker Compose Up (Local)
+      command: "docker-compose up -d --remove-orphans"
+      args:
+        chdir: "../"
