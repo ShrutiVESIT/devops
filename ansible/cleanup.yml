@@ -1,0 +1,18 @@
+---
+- name: Cleanup DevOps Toolkit Application
+  hosts: localhost
+  become: no
+
+  tasks:
+    - name: Stop and remove containers and orphans
+      command: "docker-compose down --remove-orphans"
+      args:
+        chdir: "../"
+
+    - name: Remove unused Docker images
+      command: "docker image prune -af"
+      register: prune_output
+
+    - name: Show prune results
+      debug:
+        var: prune_output.stdout_lines
